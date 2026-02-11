@@ -1,13 +1,16 @@
 import numpy as np
 import itertools
+import os
 from collections import defaultdict
 import time
-from utils import *
+from .utils import *
 from functools import reduce
 
 from scipy.sparse import csr_matrix
 import pandas as pd
 from fractions import Fraction
+
+_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 
 def find_rational_approximation(x, max_denominator=1000):
     """
@@ -456,7 +459,7 @@ class ResPlanSum(ResidualPlanner):
         self.preprocessing()
 
     def preprocessing(self):
-        from utils import subtract_matrix, subtract_matrix_v2
+        from .utils import subtract_matrix, subtract_matrix_v2
         for i, k in enumerate(self.domains):
             base = self.bases[i]
             Bs, R, Us, Ur = find_residual_basis_sum(k, base)
@@ -728,7 +731,7 @@ def test_Adult():
     bases = ['P', 'I', 'P', 'I', 'I', 'I', 'I', 'I', 'I', 'P', 'P', 'P', 'I', 'I']
     system = ResPlanSum(domains, bases)
 
-    data = pd.read_csv("adult.csv")
+    data = pd.read_csv(os.path.join(_DATA_DIR, "adult.csv"))
     system.input_data(data, col_names)
     print("Len of adult dataset: ", len(data))
 
@@ -753,7 +756,7 @@ def test_simple_adult():
     bases = ['I', 'I', 'I']
     system = ResPlanSum(domains, bases)
 
-    data = pd.read_csv("simple_adult.csv")
+    data = pd.read_csv(os.path.join(_DATA_DIR, "simple_adult.csv"))
     system.input_data(data, col_names)
     print("Len of simple adult dataset: ", len(data))
 
@@ -828,7 +831,7 @@ def test_age_income():
     bases = ['P', 'P']
     system = ResPlanSum(domains, bases)
 
-    data = pd.read_csv("age_income.csv")
+    data = pd.read_csv(os.path.join(_DATA_DIR, "age_income.csv"))
     system.input_data(data, col_names)
     print("Len of age_income dataset: ", len(data))
 

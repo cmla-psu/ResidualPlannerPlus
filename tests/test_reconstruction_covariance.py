@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import itertools
-from ResPlan import ResPlanSum
+from resplan.ResPlan import ResPlanSum
 
 def test_reconstruction_covariance_compare():
     domains = [2, 2, 3]

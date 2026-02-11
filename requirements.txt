@@ -1,0 +1,8 @@
+numpy
+pandas
+scipy
+cvxpy
+gurobipy
+matplotlib
+tabulate
+tqdm

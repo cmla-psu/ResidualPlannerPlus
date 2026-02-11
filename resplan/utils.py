@@ -3,11 +3,11 @@ import itertools
 import scipy.sparse as sp
 from collections import defaultdict
 import cvxpy as cp
-from softmax import *
-from hdmm_convex import McKennaConvex
+from .softmax import *
+from .hdmm_convex import McKennaConvex
 import gurobipy as gp
 from gurobipy import GRB
-from parameter import options
+from .parameter import options
 
 
 def find_var_sum_cauchy(v, p, c=1.0):

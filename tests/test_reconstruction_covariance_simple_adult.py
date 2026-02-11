@@ -1,6 +1,9 @@
+import os
 import numpy as np
-from ResPlan import test_simple_adult, ResPlanSum
+from resplan.ResPlan import test_simple_adult, ResPlanSum
 import itertools
+
+_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 
 
 def test_reconstruction_covariance_simple_adult():
@@ -13,7 +16,7 @@ def test_reconstruction_covariance_simple_adult():
     # Run with original subtract_matrix (v1)
     system_v1 = ResPlanSum([2, 2, 3], ['I', 'I', 'I'], subtract_version='v1')
     import pandas as pd
-    data = pd.read_csv("simple_adult.csv")
+    data = pd.read_csv(os.path.join(_DATA_DIR, "simple_adult.csv"))
     col_names = ['education', 'marital', 'gender']
     system_v1.input_data(data, col_names)
     for subset in subset_i:

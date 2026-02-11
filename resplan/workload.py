@@ -1,6 +1,6 @@
 import numpy as np
 import itertools
-from ResPlan import ResPlanSum, ResPlanMax
+from .ResPlan import ResPlanSum, ResPlanMax
 
 
 def root_mean_squared_error(sum_var, num_query, pcost):

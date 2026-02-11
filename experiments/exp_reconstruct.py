@@ -1,9 +1,9 @@
-from ResPlan import ResPlanSum
+from resplan.ResPlan import ResPlanSum
 import numpy as np
 import itertools
 import time
 import pandas as pd
-from workload import workload_allkway, root_mean_squared_error
+from resplan.workload import workload_allkway, root_mean_squared_error
 
 
 def test_allkway_csv(n, d=5, k=3):

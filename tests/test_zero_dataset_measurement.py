@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import itertools
 from fractions import Fraction
-from ResPlan import ResPlanSum
+from resplan.ResPlan import ResPlanSum
 
 def mult_kron_vec(mat_ls, vec):
     """Fast Kronecker matrix vector multiplication."""

@@ -1,4 +1,4 @@
-from workload import workload_allkway, root_mean_squared_error
+from resplan.workload import workload_allkway, root_mean_squared_error
 import numpy as np
 import time
 

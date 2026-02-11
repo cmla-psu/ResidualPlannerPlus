@@ -1,9 +1,12 @@
 import unittest
+import os
 import numpy as np
 import pandas as pd
 import itertools
-from ResPlan import ResPlanSum
-from utils import find_residual_basis_sum, find_residual_basis_max
+from resplan.ResPlan import ResPlanSum
+from resplan.utils import find_residual_basis_sum, find_residual_basis_max
+
+_DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 
 class TestResPlan(unittest.TestCase):
     def setUp(self):
@@ -13,9 +16,9 @@ class TestResPlan(unittest.TestCase):
         # Using Prefix basis for education and Identity basis for others
         self.bases = ['P', 'I', 'I']
         self.system = ResPlanSum(self.domains, self.bases)
-        
+
         # Load test data
-        self.data = pd.read_csv("simple_adult.csv")
+        self.data = pd.read_csv(os.path.join(_DATA_DIR, "simple_adult.csv"))
         self.system.input_data(self.data, self.col_names)
         
         # Set up a 2-way marginal query

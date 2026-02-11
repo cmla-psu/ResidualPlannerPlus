@@ -7,8 +7,9 @@ import pickle
 from multiprocessing import Pool, cpu_count
 from tqdm import tqdm
 
-# Import from ResPlan.py
-from ResPlan import ResPlanSum, all_subsets
+# Import from resplan package
+from resplan.ResPlan import ResPlanSum
+from resplan.utils import all_subsets
 
 def process_iteration(seed):
     """

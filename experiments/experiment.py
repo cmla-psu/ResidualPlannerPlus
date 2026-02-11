@@ -1,7 +1,7 @@
 import numpy as np
 import itertools
 from collections import defaultdict
-from ResPlan import ResPlanMax, ResPlanSum
+from resplan.ResPlan import ResPlanMax, ResPlanSum
 
 
 def test_kway(val, dim, k):
