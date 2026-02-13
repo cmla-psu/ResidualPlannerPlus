@@ -12,7 +12,7 @@ def time_RMSE(n_list, d_list, repeat=5):
             loss_ls = []
             for r in range(repeat):
                 start = time.time()
-                system, num_query = workload_allkway(n, d, 3, choice="sumvar")
+                system, num_query = workload_allkway(n, d, 5, choice="sumvar")
                 sum_var = system.get_noise_level()
                 rmse = root_mean_squared_error(sum_var, num_query, pcost=1)
                 end = time.time()
@@ -38,7 +38,7 @@ def time_MaxVar(n_list, d_list, repeat=5, solver="cvxpy"):
             for r in range(repeat):
                 start = time.time()
                 #system, num_query = workload_allkway(n, d, 3, choice="maxvar")
-                system, num_query = workload_allkway(n, d, 3, choice="maxvar")
+                system, num_query = workload_allkway(n, d, 5, choice="maxvar")
                 max_var = system.get_noise_level()
                 end = time.time()
 
@@ -55,8 +55,8 @@ def time_MaxVar(n_list, d_list, repeat=5, solver="cvxpy"):
 
 
 if __name__ == '__main__':
-    n_list = [10]
-    d_list = [14,15,20,30,100]
-    #time_RMSE(n_list, d_list, repeat=5)
-    time_MaxVar(n_list, d_list, repeat=5)
+    n_list = [2,4,8,16,32,64]
+    d_list = [5]
+    time_RMSE(n_list, d_list, repeat=5)
+    #time_MaxVar(n_list, d_list, repeat=5)
 

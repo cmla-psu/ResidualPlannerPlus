@@ -1,0 +1,471 @@
+domains = [85, 9, 100, 16, 7, 15, 6, 5, 2, 100, 100, 99, 42, 2]
+Variance for marginal (): 2206.048148485976
+Variance for marginal (0,): 726.792600288069
+Variance for marginal (1,): 1190.9312058088537
+Variance for marginal (2,): 698.9176823169798
+Variance for marginal (3,): 1061.791077417509
+Variance for marginal (4,): 1248.572907409495
+Variance for marginal (5,): 1076.0859465063434
+Variance for marginal (6,): 1284.6255757069653
+Variance for marginal (7,): 1328.547245105862
+Variance for marginal (8,): 1632.979654324808
+Variance for marginal (9,): 698.9176823169798
+Variance for marginal (10,): 698.9176823169798
+Variance for marginal (11,): 700.61470018756
+Variance for marginal (12,): 858.2263979003621
+Variance for marginal (13,): 1632.9796507146043
+Variance for marginal (0, 1): 418.0655748050467
+Variance for marginal (0, 2): 247.28601340682528
+Variance for marginal (0, 3): 374.42243442350934
+Variance for marginal (0, 4): 436.7544948009326
+Variance for marginal (0, 5): 379.33498999148924
+Variance for marginal (0, 6): 448.0768913451299
+Variance for marginal (0, 7): 461.4312874841681
+Variance for marginal (0, 8): 547.9493352602037
+Variance for marginal (0, 9): 247.28601341607904
+Variance for marginal (0, 10): 247.28601341607904
+Variance for marginal (0, 11): 247.88517627007786
+Variance for marginal (0, 12): 303.4343905617987
+Variance for marginal (0, 13): 547.9493352597041
+Variance for marginal (1, 2): 402.0552969403954
+Variance for marginal (1, 3): 609.0099180254185
+Variance for marginal (1, 4): 710.777344682806
+Variance for marginal (1, 5): 617.0153410566453
+Variance for marginal (1, 6): 729.3453777968216
+Variance for marginal (1, 7): 751.3056459440916
+Variance for marginal (1, 8): 895.0592157259838
+Variance for marginal (1, 9): 402.0552969166706
+Variance for marginal (1, 10): 402.0552969166706
+Variance for marginal (1, 11): 403.03017818251845
+Variance for marginal (1, 12): 493.42363930832363
+Variance for marginal (1, 13): 895.0592156814134
+Variance for marginal (2, 3): 360.0866948331623
+Variance for marginal (2, 4): 420.02775683899864
+Variance for marginal (2, 5): 364.8106879099752
+Variance for marginal (2, 6): 430.91607396742717
+Variance for marginal (2, 7): 443.7581114624051
+Variance for marginal (2, 8): 526.9482076885786
+Variance for marginal (2, 9): 237.82308117674404
+Variance for marginal (2, 10): 237.82308117674404
+Variance for marginal (2, 11): 238.39930389249008
+Variance for marginal (2, 12): 291.82067119829077
+Variance for marginal (2, 13): 526.9482076882175
+Variance for marginal (3, 4): 636.2952667675108
+Variance for marginal (3, 5): 552.5268943891133
+Variance for marginal (3, 6): 652.8426578576549
+Variance for marginal (3, 7): 672.3814263212931
+Variance for marginal (3, 8): 799.4782565194367
+Variance for marginal (3, 9): 360.0866948331623
+Variance for marginal (3, 10): 360.0866948331623
+Variance for marginal (3, 11): 360.9596018637601
+Variance for marginal (3, 12): 441.901487148774
+Variance for marginal (3, 13): 799.4782562471844
+Variance for marginal (4, 5): 644.6660681251137
+Variance for marginal (4, 6): 762.2838538018738
+Variance for marginal (4, 7): 785.3491341284669
+Variance for marginal (4, 8): 937.0578462811708
+Variance for marginal (4, 9): 420.02775683899864
+Variance for marginal (4, 10): 420.02775683899864
+Variance for marginal (4, 11): 421.04626526172984
+Variance for marginal (4, 12): 515.4883033771437
+Variance for marginal (4, 13): 937.0578463507309
+Variance for marginal (5, 6): 661.4367337019248
+Variance for marginal (5, 7): 681.2413912170562
+Variance for marginal (5, 8): 810.1291647221359
+Variance for marginal (5, 9): 364.8106879099752
+Variance for marginal (5, 10): 364.8106879099752
+Variance for marginal (5, 11): 365.6950767247804
+Variance for marginal (5, 12): 447.7011686846168
+Variance for marginal (5, 13): 810.1291647060905
+Variance for marginal (6, 7): 806.1020020384404
+Variance for marginal (6, 8): 963.0401046128894
+Variance for marginal (6, 9): 430.91607396742717
+Variance for marginal (6, 10): 430.91607396742717
+Variance for marginal (6, 11): 431.96100947462674
+Variance for marginal (6, 12): 528.8586656824216
+Variance for marginal (6, 13): 963.0401054598715
+Variance for marginal (7, 8): 994.3868276245439
+Variance for marginal (7, 9): 443.7581114624051
+Variance for marginal (7, 10): 443.7581114624051
+Variance for marginal (7, 11): 444.83423335091476
+Variance for marginal (7, 12): 544.6328062430401
+Variance for marginal (7, 13): 994.3868285390461
+Variance for marginal (8, 9): 526.9482076885786
+Variance for marginal (8, 10): 526.9482076885786
+Variance for marginal (8, 11): 528.2268675062555
+Variance for marginal (8, 12): 646.8917177487607
+Variance for marginal (8, 13): 1214.6217738030664
+Variance for marginal (9, 10): 237.82308117674404
+Variance for marginal (9, 11): 238.39930389249008
+Variance for marginal (9, 12): 291.82067121401906
+Variance for marginal (9, 13): 526.9482076882175
+Variance for marginal (10, 11): 238.39930389249008
+Variance for marginal (10, 12): 291.82067121401906
+Variance for marginal (10, 13): 526.9482076882175
+Variance for marginal (11, 12): 292.5278522390822
+Variance for marginal (11, 13): 528.2268675058872
+Variance for marginal (12, 13): 646.8917177467141
+Variance for marginal (0, 1, 2): 182.27865240905876
+Variance for marginal (0, 1, 3): 274.5463368514846
+Variance for marginal (0, 1, 4): 315.43866383098225
+Variance for marginal (0, 1, 5): 277.98213057979245
+Variance for marginal (0, 1, 6): 321.74952382644034
+Variance for marginal (0, 1, 7): 328.383774128474
+Variance for marginal (0, 1, 8): 349.86697844366734
+Variance for marginal (0, 1, 9): 182.27865240916972
+Variance for marginal (0, 1, 10): 182.27865240916972
+Variance for marginal (0, 1, 11): 182.71938996333625
+Variance for marginal (0, 1, 12): 223.46293301458616
+Variance for marginal (0, 1, 13): 349.86697844366114
+Variance for marginal (0, 2, 3): 164.66474767307122
+Variance for marginal (0, 2, 4): 189.08075554708475
+Variance for marginal (0, 2, 5): 166.7214282003281
+Variance for marginal (0, 2, 6): 192.8230703115215
+Variance for marginal (0, 2, 7): 196.7358068679868
+Variance for marginal (0, 2, 8): 208.7026170614819
+Variance for marginal (0, 2, 9): 109.36334312292205
+Variance for marginal (0, 2, 10): 109.36334312292205
+Variance for marginal (0, 2, 11): 109.61444485655184
+Variance for marginal (0, 2, 12): 134.04975961991678
+Variance for marginal (0, 2, 13): 208.70261706148185
+Variance for marginal (0, 3, 4): 284.8229521835466
+Variance for marginal (0, 3, 5): 251.08280503299625
+Variance for marginal (0, 3, 6): 290.4869167039831
+Variance for marginal (0, 3, 7): 296.42249324627187
+Variance for marginal (0, 3, 8): 314.9749002087243
+Variance for marginal (0, 3, 9): 164.66474767310737
+Variance for marginal (0, 3, 10): 164.66474767310737
+Variance for marginal (0, 3, 11): 165.0628721840086
+Variance for marginal (0, 3, 12): 201.8637086681469
+Variance for marginal (0, 3, 13): 314.9749002086867
+Variance for marginal (0, 4, 5): 288.39066098125124
+Variance for marginal (0, 4, 6): 333.9117529415018
+Variance for marginal (0, 4, 7): 340.84953155794176
+Variance for marginal (0, 4, 8): 363.966460638755
+Variance for marginal (0, 4, 9): 189.0807555472736
+Variance for marginal (0, 4, 10): 189.0807555472736
+Variance for marginal (0, 4, 11): 189.53796767778118
+Variance for marginal (0, 4, 12): 231.80746697516315
+Variance for marginal (0, 4, 13): 363.9664606387646
+Variance for marginal (0, 5, 6): 294.128235519434
+Variance for marginal (0, 5, 7): 300.14222272284263
+Variance for marginal (0, 5, 8): 318.98746751255413
+Variance for marginal (0, 5, 9): 166.72142819721012
+Variance for marginal (0, 5, 10): 166.72142819721012
+Variance for marginal (0, 5, 11): 167.12452641647408
+Variance for marginal (0, 5, 12): 204.38537527941335
+Variance for marginal (0, 5, 13): 318.9874675125519
+Variance for marginal (0, 6, 7): 347.77886197318253
+Variance for marginal (0, 6, 8): 372.0840150151819
+Variance for marginal (0, 6, 9): 192.82307031207807
+Variance for marginal (0, 6, 10): 192.82307031207807
+Variance for marginal (0, 6, 11): 193.2893578779358
+Variance for marginal (0, 6, 12): 236.3998350536261
+Variance for marginal (0, 6, 13): 372.0840150152991
+Variance for marginal (0, 7, 8): 381.10414046304015
+Variance for marginal (0, 7, 9): 196.73580686779405
+Variance for marginal (0, 7, 10): 196.73580686779405
+Variance for marginal (0, 7, 11): 197.21159750149647
+Variance for marginal (0, 7, 12): 241.2034061302922
+Variance for marginal (0, 7, 13): 381.1041404631667
+Variance for marginal (0, 8, 9): 208.70261706379534
+Variance for marginal (0, 8, 10): 208.70261706379534
+Variance for marginal (0, 8, 11): 209.2077656655286
+Variance for marginal (0, 8, 12): 255.95387214712508
+Variance for marginal (0, 8, 13): 425.9481619232746
+Variance for marginal (0, 9, 10): 109.36334312292297
+Variance for marginal (0, 9, 11): 109.6144448565528
+Variance for marginal (0, 9, 12): 134.0497596199242
+Variance for marginal (0, 9, 13): 208.7026170637953
+Variance for marginal (0, 10, 11): 109.6144448565528
+Variance for marginal (0, 10, 12): 134.0497596199242
+Variance for marginal (0, 10, 13): 208.7026170637953
+Variance for marginal (0, 11, 12): 134.3741618452579
+Variance for marginal (0, 11, 13): 209.20776566552854
+Variance for marginal (0, 12, 13): 255.9538721471248
+Variance for marginal (1, 2, 3): 264.0604827878964
+Variance for marginal (1, 2, 4): 303.38668527351973
+Variance for marginal (1, 2, 5): 267.3647269576655
+Variance for marginal (1, 2, 6): 309.45601925579456
+Variance for marginal (1, 2, 7): 315.83630850244896
+Variance for marginal (1, 2, 8): 336.48812193665583
+Variance for marginal (1, 2, 9): 175.319328000048
+Variance for marginal (1, 2, 10): 175.319328000048
+Variance for marginal (1, 2, 11): 175.74323380268567
+Variance for marginal (1, 2, 12): 214.93021067776624
+Variance for marginal (1, 2, 13): 336.48812193665134
+Variance for marginal (1, 3, 4): 457.17218741940417
+Variance for marginal (1, 3, 5): 402.80844076874064
+Variance for marginal (1, 3, 6): 466.3528234999153
+Variance for marginal (1, 3, 7): 476.0245483286869
+Variance for marginal (1, 3, 8): 507.9869523221895
+Variance for marginal (1, 3, 9): 264.0604827878037
+Variance for marginal (1, 3, 10): 264.0604827878037
+Variance for marginal (1, 3, 11): 264.6991743565813
+Variance for marginal (1, 3, 12): 323.7544428735393
+Variance for marginal (1, 3, 13): 507.98695231882834
+Variance for marginal (1, 4, 5): 462.90889408311057
+Variance for marginal (1, 4, 6): 536.3449676751485
+Variance for marginal (1, 4, 7): 547.6581069774671
+Variance for marginal (1, 4, 8): 587.3383294615164
+Variance for marginal (1, 4, 9): 303.3866852836463
+Variance for marginal (1, 4, 10): 303.3866852836463
+Variance for marginal (1, 4, 11): 304.12077115554945
+Variance for marginal (1, 4, 12): 371.99493420803543
+Variance for marginal (1, 4, 13): 587.3383294623752
+Variance for marginal (1, 5, 6): 472.2088318078921
+Variance for marginal (1, 5, 7): 482.0084983883478
+Variance for marginal (1, 5, 8): 514.4703900849436
+Variance for marginal (1, 5, 9): 267.36472695756004
+Variance for marginal (1, 5, 10): 267.36472695756004
+Variance for marginal (1, 5, 11): 268.0114293801756
+Variance for marginal (1, 5, 12): 327.8077547421739
+Variance for marginal (1, 5, 13): 514.4703900847455
+Variance for marginal (1, 6, 7): 558.9042047937666
+Variance for marginal (1, 6, 8): 600.5706218537098
+Variance for marginal (1, 6, 9): 309.4560192551356
+Variance for marginal (1, 6, 10): 309.4560192551356
+Variance for marginal (1, 6, 11): 310.2048167342621
+Variance for marginal (1, 6, 12): 379.4409872930436
+Variance for marginal (1, 6, 13): 600.5706218641662
+Variance for marginal (1, 7, 8): 615.3424083251452
+Variance for marginal (1, 7, 9): 315.83630845665266
+Variance for marginal (1, 7, 10): 315.83630845665266
+Variance for marginal (1, 7, 11): 316.60057117160596
+Variance for marginal (1, 7, 12): 387.2713064180234
+Variance for marginal (1, 7, 13): 615.3424083364355
+Variance for marginal (1, 8, 9): 336.4881219307246
+Variance for marginal (1, 8, 10): 336.4881219307246
+Variance for marginal (1, 8, 11): 337.3029440181479
+Variance for marginal (1, 8, 12): 412.71456707366394
+Variance for marginal (1, 8, 13): 691.2043435096252
+Variance for marginal (1, 9, 10): 175.31932800004563
+Variance for marginal (1, 9, 11): 175.74323380268325
+Variance for marginal (1, 9, 12): 214.93021067794697
+Variance for marginal (1, 9, 13): 336.4881219307201
+Variance for marginal (1, 10, 11): 175.74323380268325
+Variance for marginal (1, 10, 12): 214.93021067794697
+Variance for marginal (1, 10, 13): 336.4881219307201
+Variance for marginal (1, 11, 12): 215.44994787005933
+Variance for marginal (1, 11, 13): 337.30294401814336
+Variance for marginal (1, 12, 13): 412.7145670736387
+Variance for marginal (2, 3, 4): 273.9428537751164
+Variance for marginal (2, 3, 5): 241.49481394122384
+Variance for marginal (2, 3, 6): 279.389366900159
+Variance for marginal (2, 3, 7): 285.097103310639
+Variance for marginal (2, 3, 8): 302.93190132162914
+Variance for marginal (2, 3, 9): 158.37825938291982
+Variance for marginal (2, 3, 10): 158.37825938291982
+Variance for marginal (2, 3, 11): 158.76118727408738
+Variance for marginal (2, 3, 12): 194.15677584930162
+Variance for marginal (2, 3, 13): 302.9319013216019
+Variance for marginal (2, 4, 5): 277.37394867478145
+Variance for marginal (2, 4, 6): 321.15317168610727
+Variance for marginal (2, 4, 7): 327.8252891994361
+Variance for marginal (2, 4, 8): 350.047962400229
+Variance for marginal (2, 4, 9): 181.86130392630687
+Variance for marginal (2, 4, 10): 181.86130392630687
+Variance for marginal (2, 4, 11): 182.30105089896873
+Variance for marginal (2, 4, 12): 222.9553145024912
+Variance for marginal (2, 4, 13): 350.0479624002359
+Variance for marginal (2, 5, 6): 282.89131795111376
+Variance for marginal (2, 5, 7): 288.6745621957213
+Variance for marginal (2, 5, 8): 306.79081527415235
+Variance for marginal (2, 5, 9): 160.35641929650834
+Variance for marginal (2, 5, 10): 160.35641929650834
+Variance for marginal (2, 5, 11): 160.74412858340952
+Variance for marginal (2, 5, 12): 196.58210126038912
+Variance for marginal (2, 5, 13): 306.79081527415076
+Variance for marginal (2, 6, 7): 334.48931193167357
+Variance for marginal (2, 6, 8): 357.8547436493169
+Variance for marginal (2, 6, 9): 185.46032361270179
+Variance for marginal (2, 6, 10): 185.46032361270179
+Variance for marginal (2, 6, 11): 185.9087955579137
+Variance for marginal (2, 6, 12): 227.37178706614088
+Variance for marginal (2, 6, 13): 357.8547436494016
+Variance for marginal (2, 7, 8): 366.5292690302806
+Variance for marginal (2, 7, 9): 189.22299228609702
+Variance for marginal (2, 7, 10): 189.22299228609702
+Variance for marginal (2, 7, 11): 189.68060055274222
+Variance for marginal (2, 7, 12): 231.9909716230553
+Variance for marginal (2, 7, 13): 366.52926903037206
+Variance for marginal (2, 8, 9): 200.7256435789842
+Variance for marginal (2, 8, 10): 200.7256435789842
+Variance for marginal (2, 8, 11): 201.21148080469283
+Variance for marginal (2, 8, 12): 246.16994315054455
+Variance for marginal (2, 8, 13): 409.64623825014485
+Variance for marginal (2, 9, 10): 105.17809731912853
+Variance for marginal (2, 9, 11): 105.41921822755447
+Variance for marginal (2, 9, 12): 128.9337399471232
+Variance for marginal (2, 9, 13): 200.72564357898418
+Variance for marginal (2, 10, 11): 105.41921822755447
+Variance for marginal (2, 10, 12): 128.9337399471232
+Variance for marginal (2, 10, 13): 200.72564357898418
+Variance for marginal (2, 11, 12): 129.24533557749493
+Variance for marginal (2, 11, 13): 201.21148080469277
+Variance for marginal (2, 12, 13): 246.16994315054433
+Variance for marginal (3, 4, 5): 417.9287666007967
+Variance for marginal (3, 4, 6): 484.02582331746845
+Variance for marginal (3, 4, 7): 494.14240337728137
+Variance for marginal (3, 4, 8): 528.510906553587
+Variance for marginal (3, 4, 9): 273.9428537751164
+Variance for marginal (3, 4, 10): 273.9428537751164
+Variance for marginal (3, 4, 11): 274.6055523805999
+Variance for marginal (3, 4, 12): 335.88211366110005
+Variance for marginal (3, 4, 13): 528.5109065485904
+Variance for marginal (3, 5, 6): 426.27389801628766
+Variance for marginal (3, 5, 7): 435.0379607791781
+Variance for marginal (3, 5, 8): 463.10111906021274
+Variance for marginal (3, 5, 9): 241.49481394122384
+Variance for marginal (3, 5, 10): 241.49481394122384
+Variance for marginal (3, 5, 11): 242.0788301533136
+Variance for marginal (3, 5, 12): 296.07080224619773
+Variance for marginal (3, 5, 13): 463.1011190590027
+Variance for marginal (3, 6, 7): 504.2285422286247
+Variance for marginal (3, 6, 8): 540.3444912842518
+Variance for marginal (3, 6, 9): 279.389366900159
+Variance for marginal (3, 6, 10): 279.389366900159
+Variance for marginal (3, 6, 11): 280.06531060914114
+Variance for marginal (3, 6, 12): 342.5666447469154
+Variance for marginal (3, 6, 13): 540.3444912803895
+Variance for marginal (3, 7, 8): 553.5176327025696
+Variance for marginal (3, 7, 9): 285.09710332439954
+Variance for marginal (3, 7, 10): 285.09710332439954
+Variance for marginal (3, 7, 11): 285.78692623474154
+Variance for marginal (3, 7, 12): 349.5725472609227
+Variance for marginal (3, 7, 13): 553.5176326958158
+Variance for marginal (3, 8, 9): 302.93190132162914
+Variance for marginal (3, 8, 10): 302.93190132162914
+Variance for marginal (3, 8, 11): 303.6653605863905
+Variance for marginal (3, 8, 12): 371.54722014700366
+Variance for marginal (3, 8, 13): 619.7912482363905
+Variance for marginal (3, 9, 10): 158.37825938291982
+Variance for marginal (3, 9, 11): 158.76118727408738
+Variance for marginal (3, 9, 12): 194.15677584936304
+Variance for marginal (3, 9, 13): 302.9319013216019
+Variance for marginal (3, 10, 11): 158.76118727408738
+Variance for marginal (3, 10, 12): 194.15677584936304
+Variance for marginal (3, 10, 13): 302.9319013216019
+Variance for marginal (3, 11, 12): 194.6262214483571
+Variance for marginal (3, 11, 13): 303.6653605863627
+Variance for marginal (3, 12, 13): 371.5472201468493
+Variance for marginal (4, 5, 6): 490.10873429300375
+Variance for marginal (4, 5, 7): 500.3591308354552
+Variance for marginal (4, 5, 8): 535.2625923418598
+Variance for marginal (4, 5, 9): 277.37394867478145
+Variance for marginal (4, 5, 10): 277.37394867478145
+Variance for marginal (4, 5, 11): 278.04496863659796
+Variance for marginal (4, 5, 12): 340.09055795141177
+Variance for marginal (4, 5, 13): 535.2625923421689
+Variance for marginal (4, 6, 7): 580.3878275752355
+Variance for marginal (4, 6, 8): 625.0895854697574
+Variance for marginal (4, 6, 9): 321.15317168610727
+Variance for marginal (4, 6, 10): 321.15317168610727
+Variance for marginal (4, 6, 11): 321.93029487379783
+Variance for marginal (4, 6, 12): 393.7892677193316
+Variance for marginal (4, 6, 13): 625.0895854910216
+Variance for marginal (4, 7, 8): 640.5802727615364
+Variance for marginal (4, 7, 9): 327.8252891994361
+Variance for marginal (4, 7, 10): 327.8252891994361
+Variance for marginal (4, 7, 11): 328.61858652769456
+Variance for marginal (4, 7, 12): 401.97927237830334
+Variance for marginal (4, 7, 13): 640.5802727859292
+Variance for marginal (4, 8, 9): 350.047962400229
+Variance for marginal (4, 8, 10): 350.047962400229
+Variance for marginal (4, 8, 11): 350.89564922712333
+Variance for marginal (4, 8, 12): 429.35233513340995
+Variance for marginal (4, 8, 13): 721.4484352531726
+Variance for marginal (4, 9, 10): 181.86130392630687
+Variance for marginal (4, 9, 11): 182.30105089896873
+Variance for marginal (4, 9, 12): 222.95531450281217
+Variance for marginal (4, 9, 13): 350.0479624002359
+Variance for marginal (4, 10, 11): 182.30105089896873
+Variance for marginal (4, 10, 12): 222.95531450281217
+Variance for marginal (4, 10, 13): 350.0479624002359
+Variance for marginal (4, 11, 12): 223.49450694772133
+Variance for marginal (4, 11, 13): 350.89564922713043
+Variance for marginal (4, 12, 13): 429.3523351334494
+Variance for marginal (5, 6, 7): 510.5765073484014
+Variance for marginal (5, 6, 8): 547.2527364886819
+Variance for marginal (5, 6, 9): 282.89131795111376
+Variance for marginal (5, 6, 10): 282.89131795111376
+Variance for marginal (5, 6, 11): 283.57575154956754
+Variance for marginal (5, 6, 12): 346.8615909972081
+Variance for marginal (5, 6, 13): 547.2527364924463
+Variance for marginal (5, 7, 8): 560.6027920903018
+Variance for marginal (5, 7, 9): 288.6745621957213
+Variance for marginal (5, 7, 10): 288.6745621957213
+Variance for marginal (5, 7, 11): 289.373051820437
+Variance for marginal (5, 7, 12): 353.95975992794246
+Variance for marginal (5, 7, 13): 560.6027920943662
+Variance for marginal (5, 8, 9): 306.79081527415235
+Variance for marginal (5, 8, 10): 306.79081527415235
+Variance for marginal (5, 8, 11): 307.53363278681405
+Variance for marginal (5, 8, 12): 376.28140626291815
+Variance for marginal (5, 8, 13): 627.8657955888707
+Variance for marginal (5, 9, 10): 160.35641929650834
+Variance for marginal (5, 9, 11): 160.74412858340952
+Variance for marginal (5, 9, 12): 196.58210126045904
+Variance for marginal (5, 9, 13): 306.79081527415076
+Variance for marginal (5, 10, 11): 160.74412858340952
+Variance for marginal (5, 10, 12): 196.58210126045904
+Variance for marginal (5, 10, 13): 306.79081527415076
+Variance for marginal (5, 11, 12): 197.05741458015459
+Variance for marginal (5, 11, 13): 307.5336327868124
+Variance for marginal (5, 12, 13): 376.28140626290906
+Variance for marginal (6, 7, 8): 655.2549118771192
+Variance for marginal (6, 7, 9): 334.48931190678695
+Variance for marginal (6, 7, 10): 334.48931190678695
+Variance for marginal (6, 7, 11): 335.29876277597185
+Variance for marginal (6, 7, 12): 410.1576611231238
+Variance for marginal (6, 7, 13): 655.2549119404126
+Variance for marginal (6, 8, 9): 357.8547436493169
+Variance for marginal (6, 8, 10): 357.8547436493169
+Variance for marginal (6, 8, 11): 358.72135387109483
+Variance for marginal (6, 8, 12): 438.9335687770864
+Variance for marginal (6, 8, 13): 739.6126533462077
+Variance for marginal (6, 9, 10): 185.46032361270179
+Variance for marginal (6, 9, 11): 185.9087955579137
+Variance for marginal (6, 9, 12): 227.37178706657778
+Variance for marginal (6, 9, 13): 357.8547436494016
+Variance for marginal (6, 10, 11): 185.9087955579137
+Variance for marginal (6, 10, 12): 227.37178706657778
+Variance for marginal (6, 10, 13): 357.8547436494016
+Variance for marginal (6, 11, 12): 227.92169075977844
+Variance for marginal (6, 11, 13): 358.72135387118124
+Variance for marginal (6, 12, 13): 438.9335687775666
+Variance for marginal (7, 8, 9): 366.5292690302806
+Variance for marginal (7, 8, 10): 366.5292690302806
+Variance for marginal (7, 8, 11): 367.4169189985064
+Variance for marginal (7, 8, 12): 449.5836683507903
+Variance for marginal (7, 8, 13): 760.8363660973149
+Variance for marginal (7, 9, 10): 189.22299228609702
+Variance for marginal (7, 9, 11): 189.68060055274222
+Variance for marginal (7, 9, 12): 231.9909716236844
+Variance for marginal (7, 9, 13): 366.52926903037206
+Variance for marginal (7, 10, 11): 189.68060055274222
+Variance for marginal (7, 10, 12): 231.9909716236844
+Variance for marginal (7, 10, 13): 366.52926903037206
+Variance for marginal (7, 11, 12): 232.5520969614982
+Variance for marginal (7, 11, 13): 367.41691899859967
+Variance for marginal (7, 12, 13): 449.5836683513087
+Variance for marginal (8, 9, 10): 200.7256435789842
+Variance for marginal (8, 9, 11): 201.21148080469283
+Variance for marginal (8, 9, 12): 246.1699431544766
+Variance for marginal (8, 9, 13): 409.64623825014485
+Variance for marginal (8, 10, 11): 201.21148080469283
+Variance for marginal (8, 10, 12): 246.1699431544766
+Variance for marginal (8, 10, 13): 409.64623825014485
+Variance for marginal (8, 11, 12): 246.7658261631703
+Variance for marginal (8, 11, 13): 410.6389668410086
+Variance for marginal (8, 12, 13): 502.6215189895037
+Variance for marginal (9, 10, 11): 105.41921822755447
+Variance for marginal (9, 10, 12): 128.9337399471248
+Variance for marginal (9, 10, 13): 200.72564357898418
+Variance for marginal (9, 11, 12): 129.24533557749652
+Variance for marginal (9, 11, 13): 201.21148080469277
+Variance for marginal (9, 12, 13): 246.1699431544764
+Variance for marginal (10, 11, 12): 129.24533557749652
+Variance for marginal (10, 11, 13): 201.21148080469277
+Variance for marginal (10, 12, 13): 246.1699431544764
+Variance for marginal (11, 12, 13): 246.76582616317012

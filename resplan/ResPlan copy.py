@@ -476,7 +476,7 @@ class ResPlanSum(ResidualPlanner):
             self.pcost_sum[i] = 1
             self.pcost_res[i] = np.max(np.diag(R.T @ R))
             self.var_sum[i] = np.trace(Us @ Us.T)
-            self.var_res[i] = np.linalg.norm(Ur @ R, 'fro') ** 2
+            self.var_res[i] = np.trace(Ur @ Ur.T)
 
     def input_mech(self, att):
         """Store coefficients for variance and privacy cost."""
