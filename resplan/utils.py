@@ -106,6 +106,38 @@ def sqrt_mat(X):
     return B
 
 
+def haar_tree_residual(n):
+    """
+    Build the (n-1) x n residual part of the Haar binary tree.
+
+    Row 1 (Bs = all-ones) is NOT included; only the "left − right" rows.
+
+    For n=8 this produces:
+      [ 1  1  1  1 -1 -1 -1 -1]   level 1: left half vs right half
+      [ 1  1 -1 -1  0  0  0  0]   level 2
+      [ 0  0  0  0  1  1 -1 -1]
+      [ 1 -1  0  0  0  0  0  0]   level 3 (leaf pairs)
+      [ 0  0  1 -1  0  0  0  0]
+      [ 0  0  0  0  1 -1  0  0]
+      [ 0  0  0  0  0  0  1 -1]
+
+    Requires n to be a power of 2 and n >= 2.
+    """
+    assert n >= 2 and (n & (n - 1)) == 0, f"n must be a power of 2, got {n}"
+    rows = []
+    block_size = n // 2
+    while block_size >= 1:
+        num_blocks = n // (2 * block_size)
+        for b in range(num_blocks):
+            row = np.zeros(n)
+            start = b * 2 * block_size
+            row[start:start + block_size] = 1
+            row[start + block_size:start + 2 * block_size] = -1
+            rows.append(row)
+        block_size //= 2
+    return np.array(rows)
+
+
 def prefix_workload(k):
     #TODO: find the meaning of it 
     mat = np.zeros([k, k])
@@ -138,12 +170,36 @@ def  find_residual_basis_sum(k, base):
         work = np.eye(k)
     elif base == 'R':
         work = range_workload(k)
+    elif base == 'H':
+        work = np.eye(k)
     else:
         work = None
     #Bs is the 1nT
     Bs = np.ones([1, k])
+
+    # For Haar basis, use full Haar matrix as S_i and apply Algorithm 4
+    # (construct subtraction matrix via Cholesky, same as McKennaConvex case)
+    if base == 'H':
+        Si = np.concatenate([Bs, haar_tree_residual(k)])  # full k x k Haar
+        P1 = Si - Si @ Bs.T @ Bs / k
+        Cov = P1.T @ P1
+        regularization = 1e-10
+        Cov += np.eye(Cov.shape[0]) * regularization
+        L = np.linalg.cholesky(Cov)
+        col_norms = np.linalg.norm(L, axis=0)
+        num_cols_to_keep = k - 1
+        keep_indices = np.argsort(col_norms)[-num_cols_to_keep:]
+        keep_indices = np.sort(keep_indices)
+        P2 = L[:, keep_indices]
+        res_mat = P2.T
+        l_mat = np.concatenate([Bs, res_mat]).T
+        r_mat = work.T
+        X = np.linalg.solve(l_mat, r_mat).T
+        Us = X[:, 0].reshape(-1, 1)
+        Ur = X[:, 1:]
+        return Bs, res_mat, Us, Ur
+
     # strategy = ConvexDP(work)
-    
 
     temp = McKennaConvex(k)
     temp.optimize(work)

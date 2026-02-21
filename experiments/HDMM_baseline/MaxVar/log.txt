@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/export/home/gbh5146/Github/ResidualPlanner/hdmm/experiments/MaxVar/experiment_journel_table5_adult_maxvar.py", line 168, in <module>
+    run_table5_journel(attribute_Data)
+  File "/export/home/gbh5146/Github/ResidualPlanner/hdmm/experiments/MaxVar/experiment_journel_table5_adult_maxvar.py", line 147, in run_table5_journel
+    v = calculate_variance_small_marginal(W, A)
+  File "/export/home/gbh5146/Github/ResidualPlanner/hdmm/experiments/MaxVar/calculate_variance.py", line 148, in calculate_variance_small_marginal
+    samples = [calculate_variance_small_marginal(Wi, A) for Wi in W.matrices]
+  File "/export/home/gbh5146/Github/ResidualPlanner/hdmm/experiments/MaxVar/calculate_variance.py", line 148, in <listcomp>
+    samples = [calculate_variance_small_marginal(Wi, A) for Wi in W.matrices]
+  File "/export/home/gbh5146/Github/ResidualPlanner/hdmm/experiments/MaxVar/calculate_variance.py", line 165, in calculate_variance_small_marginal
+    raise Exception("wrong Datatype for marginal W case 2",W)
+Exception: ('wrong Datatype for marginal W case 2', <1x641263392000000000 Kronecker with dtype=float64>)

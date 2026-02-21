@@ -19,12 +19,18 @@ ResidualPlannerPlus/
 │   ├── ResPlan.py           # Main planner classes (ResPlanSum, ResPlanMax)
 │   ├── utils.py             # Optimization solvers and matrix utilities
 │   ├── workload.py          # Workload configuration helpers
-│   ├── hdmm_convex.py       # McKenna convex optimization strategy
+│   ├── hdmm_convex.py       # McKenna convex optimization (adapted from HDMM, AGPL-3.0)
 │   ├── softmax.py           # Softmax-based optimization
 │   ├── bounded_dp.py        # Bounded DP utilities
 │   └── parameter.py         # Gurobi license config (not tracked in git)
+├── hdmm/                    # HDMM (git submodule, github.com/dpcomp-org/hdmm)
 ├── tests/                   # Test files
 ├── experiments/             # Experiment and benchmark scripts
+│   └── HDMM_baseline/      # HDMM baseline comparison experiments
+│       ├── MaxVar/
+│       ├── RMSE/
+│       ├── RMSE_query/
+│       └── journal/
 ├── data/                    # Datasets (adult.csv, simple_adult.csv, etc.)
 ├── docs/                    # Design documents and documentation
 ├── figures/                 # Paper figures
@@ -38,9 +44,15 @@ ResidualPlannerPlus/
 ## Installation
 
 ```bash
-git clone https://github.com/<your-org>/ResidualPlannerPlus.git
+git clone --recurse-submodules https://github.com/<your-org>/ResidualPlannerPlus.git
 cd ResidualPlannerPlus
 pip install -r requirements.txt
+```
+
+If you already cloned without `--recurse-submodules`, initialize the HDMM submodule:
+
+```bash
+git submodule update --init
 ```
 
 **Gurobi (optional):** `ResPlanMax` can use Gurobi as an alternative solver. If you have a Gurobi license, create `resplan/parameter.py` with your credentials:
@@ -109,6 +121,24 @@ python -m experiments.exp_large_dataset
 python -m experiments.exp_reconstruct
 ```
 
+## Dependencies
+
+### HDMM (git submodule)
+
+This project uses [HDMM](https://github.com/dpcomp-org/hdmm) for baseline comparisons. It is included as a git submodule under `hdmm/`.
+
+`resplan/hdmm_convex.py` contains the `McKennaConvex` optimizer adapted from HDMM's `templates.py`, originally authored by Ryan McKenna. This code is licensed under the [GNU Affero General Public License v3.0 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html).
+
+```bash
+# Clone with submodule:
+git clone --recurse-submodules https://github.com/<your-org>/ResidualPlannerPlus.git
+
+# Or if already cloned:
+git submodule update --init
+```
+
 ## License
 
-MIT License. See [LICENSE](LICENSE) for details.
+This project is licensed under the [GNU Affero General Public License v3.0 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html). See [LICENSE](LICENSE) for details.
+
+`resplan/hdmm_convex.py` is adapted from [HDMM](https://github.com/dpcomp-org/hdmm) (AGPL-3.0).

@@ -11,3 +11,6 @@ visualizations/
 *.pkl
 .env
 .claude/
+tempresult/
+.logcks/
+.staging/

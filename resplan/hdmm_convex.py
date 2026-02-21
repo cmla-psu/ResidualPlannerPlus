@@ -1,3 +1,7 @@
+# Adapted from HDMM (https://github.com/dpcomp-org/hdmm)
+# Original author: Ryan McKenna
+# Licensed under the GNU Affero General Public License v3.0 (AGPL-3.0)
+
 from functools import reduce
 import numpy as np
 from scipy import optimize

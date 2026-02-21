@@ -329,6 +329,9 @@ class ResidualPlanner:
                 elif base == 'R':
                     # For range basis
                     work = range_workload(self.domains[at])
+                elif base == 'H':
+                    # For Haar basis, use identity as the workload
+                    work = np.eye(self.domains[at])
                 att_mat_list.append(work)
                 att_mat_dict[at] = work
             # Calculate Kronecker product using np.kron if we have matrices
@@ -474,7 +477,7 @@ class ResPlanSum(ResidualPlanner):
             self.one_mat[k] = np.ones([k,1])/k
            
             self.pcost_sum[i] = 1
-            self.pcost_res[i] = np.max(np.diag(R.T @ R))
+            self.pcost_res[i] = np.max(np.diag(R.T @ np.linalg.inv(R @ R.T) @ R))
             self.var_sum[i] = np.trace(Us @ Us.T)
             self.var_res[i] = np.linalg.norm(Ur @ R, 'fro') ** 2
 
@@ -582,7 +585,7 @@ class ResPlanMax(ResidualPlanner):
             self.residual_matrix[k] = R
             self.residual_pinv[k] = np.linalg.pinv(R)
             self.pcost_sum[i] = 1
-            self.pcost_res[i] = np.max(np.diag(R.T @ R))
+            self.pcost_res[i] = np.max(np.diag(R.T @ np.linalg.inv(R @ R.T) @ R))
             self.var_sum[i] = np.diag(Us @ Us.T)
             self.var_res[i] = np.diag(Ur @ Ur.T)
 
