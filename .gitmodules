@@ -1,0 +1,3 @@
+[submodule "hdmm"]
+	path = hdmm
+	url = https://github.com/dpcomp-org/hdmm.git
