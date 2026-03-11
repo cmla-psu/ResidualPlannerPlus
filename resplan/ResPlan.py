@@ -113,7 +113,7 @@ class MargMech:
 
 class ResMech:
 
-    def __init__(self, domains, att, residual_matrix):
+    def __init__(self, domains, att, residual_matrix, gamma_matrix=None):
         self.col_names = None
         self.data = None
         self.domains = domains
@@ -121,7 +121,8 @@ class ResMech:
         self.att = att
         self.core_mat = None
         self.res_mat_list = []
-        self.get_core_matrix(residual_matrix)
+        self.gamma_mat_list = []
+        self.get_core_matrix(residual_matrix, gamma_matrix)
 
         self.noise_level = None
         self.covar = None
@@ -132,16 +133,19 @@ class ResMech:
         self.true_recon_answer = None
         self.csv_data = None
     #change the sub matrix to identity matrix
-    def get_core_matrix(self, residual_matrix,using_identity=False):
+    def get_core_matrix(self, residual_matrix, gamma_matrix=None, using_identity=False):
         att_set = set(list(self.att))
         for i in range(0, self.num_att):
             att_size = self.domains[i]
             if i in att_set:
                 if using_identity:
                     res_mat = subtract_matrix(att_size)
+                    gamma_mat = subtract_matrix(att_size)
                 else:
                     res_mat = residual_matrix[att_size]
+                    gamma_mat = gamma_matrix[att_size] if gamma_matrix else res_mat
                 self.res_mat_list.append(res_mat)
+                self.gamma_mat_list.append(gamma_mat)
 
     def input_noise_level(self, noise_level):
         self.noise_level = noise_level
@@ -174,26 +178,28 @@ class ResMech:
         non_noisy_vector = mult_kron_vec(self.res_mat_list, sparse_vec)
         col_size = np.prod(sub_domains).astype(int)
 
+        gamma_col_size = int(np.prod([g.shape[1] for g in self.gamma_mat_list])) if self.gamma_mat_list else col_size
+
         if debug==True and (n_runs is not None and n_runs > 1):
             cov_sum = None
             for _ in range(n_runs):
-                rd = np.sqrt(self.noise_level) * np.random.normal(size=[col_size, 1])
-                cov_rd = mult_kron_vec(self.res_mat_list, rd)
+                rd = np.sqrt(self.noise_level) * np.random.normal(size=[gamma_col_size, 1])
+                cov_rd = mult_kron_vec(self.gamma_mat_list, rd)
                 cov = cov_rd @ cov_rd.T
                 if cov_sum is None:
                     cov_sum = np.zeros_like(cov)
                 cov_sum += cov
             avg_cov = cov_sum / n_runs
             # For compatibility, still set noisy/non_noisy/csv_data as in the single run
-            rd = np.sqrt(self.noise_level) * np.random.normal(size=[col_size, 1])
-            cov_rd = mult_kron_vec(self.res_mat_list, rd)
+            rd = np.sqrt(self.noise_level) * np.random.normal(size=[gamma_col_size, 1])
+            cov_rd = mult_kron_vec(self.gamma_mat_list, rd)
             self.noisy_answer_vector = non_noisy_vector + cov_rd
             self.non_noisy_vector = non_noisy_vector + np.zeros_like(cov_rd)
             self.csv_data = sparse_vec.reshape(-1,1)
             return avg_cov
         else:
-            rd = np.sqrt(self.noise_level) * np.random.normal(size=[col_size, 1])
-            cov_rd = mult_kron_vec(self.res_mat_list, rd)
+            rd = np.sqrt(self.noise_level) * np.random.normal(size=[gamma_col_size, 1])
+            cov_rd = mult_kron_vec(self.gamma_mat_list, rd)
             self.noisy_answer_vector = non_noisy_vector + cov_rd
             self.non_noisy_vector = non_noisy_vector + np.zeros_like(cov_rd)
             self.csv_data = sparse_vec.reshape(-1,1)
@@ -274,6 +280,7 @@ class ResidualPlanner:
         self.var_res = {}
 
         self.residual_matrix = {}
+        self.gamma_matrix = {}
         self.residual_pinv = {}
         self.one_mat = {}
         self.subtract_version = subtract_version
@@ -465,21 +472,28 @@ class ResPlanSum(ResidualPlanner):
         from .utils import subtract_matrix, subtract_matrix_v2
         for i, k in enumerate(self.domains):
             base = self.bases[i]
-            Bs, R, Us, Ur = find_residual_basis_sum(k, base)
+            Bs, R, Us, Ur, gamma = find_residual_basis_sum(k, base)
             if base == 'I':
                 if self.subtract_version == 'v2':
                     self.residual_matrix[k] = subtract_matrix_v2(k)
+                    self.gamma_matrix[k] = subtract_matrix_v2(k)
                 else:
                     self.residual_matrix[k] = subtract_matrix(k)
+                    self.gamma_matrix[k] = subtract_matrix(k)
             else:
                 self.residual_matrix[k] = R
+                self.gamma_matrix[k] = gamma
             self.residual_pinv[k] = np.linalg.pinv(self.residual_matrix[k])
-            self.one_mat[k] = np.ones([k,1])/k
-           
+            self.one_mat[k] = np.ones([k, 1]) / k
+
             self.pcost_sum[i] = 1
-            self.pcost_res[i] = np.max(np.diag(R.T @ np.linalg.inv(R @ R.T) @ R))
             self.var_sum[i] = np.trace(Us @ Us.T)
-            self.var_res[i] = np.linalg.norm(Ur @ R, 'fro') ** 2
+            # Unified Theorem 7 & 8 formulas
+            R_cur = self.residual_matrix[k]
+            G_cur = self.gamma_matrix[k]
+            GGT_inv = np.linalg.inv(G_cur @ G_cur.T)
+            self.pcost_res[i] = np.max(np.diag(R_cur.T @ GGT_inv @ R_cur))
+            self.var_res[i] = np.linalg.norm(Ur @ G_cur, 'fro') ** 2
 
     def input_mech(self, att):
         """Store coefficients for variance and privacy cost."""
@@ -503,7 +517,7 @@ class ResPlanSum(ResidualPlanner):
                 self.pcost_coeff[subset] = pcost_coeff
 
                 #TODO: add one extra parameters to use identity matrix or not
-                res_mech = ResMech(self.domains, subset, self.residual_matrix)
+                res_mech = ResMech(self.domains, subset, self.residual_matrix, self.gamma_matrix)
                 self.res_dict[subset] = res_mech
                 self.res_index[subset] = self.num_of_res
                 self.id2res[self.num_of_res] = subset
@@ -580,10 +594,10 @@ class ResPlanMax(ResidualPlanner):
         for i, k in enumerate(self.domains):
             base = self.bases[i]
             Bs, R, Us, Ur = find_residual_basis_max(k, base)
-            #TODO: in here I tried the sum version since its all the same 
-            #Bs, R, Us, Ur = find_residual_basis_sum(k, base)
             self.residual_matrix[k] = R
             self.residual_pinv[k] = np.linalg.pinv(R)
+            self.one_mat[k] = np.ones([k, 1]) / k
+
             self.pcost_sum[i] = 1
             self.pcost_res[i] = np.max(np.diag(R.T @ np.linalg.inv(R @ R.T) @ R))
             self.var_sum[i] = np.diag(Us @ Us.T)
@@ -617,7 +631,7 @@ class ResPlanMax(ResidualPlanner):
         col_list = []
         var_list = []
         # cur_id = self.marg_index[att]
-        #TODO: for range query the row size should change 
+        #TODO: for range query the row size should change
         num_of_rows = np.prod([self.domains[c] for c in att])
 
         for subset in att_subsets:

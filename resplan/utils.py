@@ -20,6 +20,48 @@ def find_var_sum_cauchy(v, p, c=1.0):
     x = np.sqrt(T * p / (c * v))
     return x, T
 
+def find_var_sum_cvxpy(var, pcost):
+    """Solve the small optimization problem.
+
+    min sum(1/x)
+    s.t. A x <= b
+    """
+    size = len(var)
+    x = cp.Variable(size)
+    constraints = [x >= 0]
+    constraints += [pcost @ cp.inv_pos(x) <= 1]
+    obj = cp.Minimize(cp.sum(var @ x))
+    prob = cp.Problem(obj,
+                      constraints)
+    prob.solve()
+    print("obj sum of var:", obj.value)
+    return x.value, obj.value
+
+
+def find_var_sum_gurobi(var, pcost):
+    """Solve the small optimization problem.
+
+    min var @ x
+    s.t. pcost @ (1/x) <= 1
+    """
+    env = gp.Env(empty=True)
+    # env.setParam("OutputFlag", 0)
+    env.start()
+    m = gp.Model(env=env)
+    m.Params.TIME_LIMIT = 10
+    m.setParam('NonConvex', 2)
+    # m.setParam(GRB.Param.OutputFlag, 0)
+    size = len(var)
+    x = m.addMVar(size, lb=1e-5)
+    x_inv = m.addMVar(size, lb=1e-5)
+
+    m.setObjective(var @ x, sense=GRB.MINIMIZE)
+    m.addConstr(pcost @ x_inv <= 1)
+    for i in range(size):
+        m.addConstr(x[i] * x_inv[i] == 1.0)
+    m.optimize()
+    return x.X, var @ x.X
+
 
 def find_var_max_cvxpy(coeff, A, b):
     """Solve the optimization problem.
@@ -163,7 +205,39 @@ def range_workload(k):
     return mat
 
 
-def  find_residual_basis_sum(k, base):
+def _equalize_sub(Sub):
+    """Reweight rows of Sub to equalize column L2 norms.
+
+    Finds weights w such that all columns of diag(w) @ Sub have equal L2 norm.
+    Solves Sub²ᵀ h ≈ 1 where h_l = w_l², then w = sqrt(h).
+
+    If the unconstrained solution has non-positive entries, falls back to
+    bounded least squares with a relative floor to prevent any row from
+    being effectively removed (floor = max(h) * 0.01, giving at most
+    a 10:1 ratio in row weights w).
+
+    Returns the reweighted Sub matrix (Gamma remains I).
+    """
+    r, n = Sub.shape
+    Sub2 = Sub ** 2
+    A = Sub2.T  # n x r
+
+    # Least-squares: A @ h ≈ 1
+    h, _, _, _ = np.linalg.lstsq(A, np.ones(n), rcond=None)
+
+    if np.any(h <= 0):
+        # Relative floor: keep all rows with weight >= 10% of max
+        # (h_floor / h_max = 0.01  ⟹  w_min / w_max = sqrt(0.01) = 0.1)
+        h_floor = np.max(h) * 0.01 if np.max(h) > 0 else 1.0 / r
+        from scipy.optimize import lsq_linear
+        result = lsq_linear(A, np.ones(n), bounds=(h_floor, np.inf))
+        h = result.x
+
+    w = np.sqrt(h)
+    return Sub * w[:, None]  # row-wise scaling
+
+
+def find_residual_basis_sum(k, base):
     if base == 'P':
         work = prefix_workload(k)
     elif base == 'I':
@@ -174,107 +248,69 @@ def  find_residual_basis_sum(k, base):
         work = np.eye(k)
     else:
         work = None
-    #Bs is the 1nT
     Bs = np.ones([1, k])
 
-    # For Haar basis, use full Haar matrix as S_i and apply Algorithm 4
-    # (construct subtraction matrix via Cholesky, same as McKennaConvex case)
-    if base == 'H':
-        Si = np.concatenate([Bs, haar_tree_residual(k)])  # full k x k Haar
-        P1 = Si - Si @ Bs.T @ Bs / k
-        Cov = P1.T @ P1
-        regularization = 1e-10
-        Cov += np.eye(Cov.shape[0]) * regularization
-        L = np.linalg.cholesky(Cov)
-        col_norms = np.linalg.norm(L, axis=0)
-        num_cols_to_keep = k - 1
-        keep_indices = np.argsort(col_norms)[-num_cols_to_keep:]
-        keep_indices = np.sort(keep_indices)
-        P2 = L[:, keep_indices]
-        res_mat = P2.T
+    # Algorithm 4, Step 1: Identity base
+    if base == 'I':
+        res_mat = subtract_matrix(k)
+        gamma = res_mat.copy()  # Gamma_i = Sub_i for identity
         l_mat = np.concatenate([Bs, res_mat]).T
         r_mat = work.T
         X = np.linalg.solve(l_mat, r_mat).T
         Us = X[:, 0].reshape(-1, 1)
         Ur = X[:, 1:]
-        return Bs, res_mat, Us, Ur
+        return Bs, res_mat, Us, Ur, gamma
 
-    # strategy = ConvexDP(work)
+    # Algorithm 4, Step 2: Non-identity bases (P, R, H)
+    if base == 'H':
+        Si = np.concatenate([Bs, haar_tree_residual(k)])
+    else:
+        # Center workload and prepend sum query before McKennaConvex optimization
+        proj = np.eye(k) - np.ones((k, 1)) @ np.ones((1, k)) / k
+        projw = work @ proj
+        workprime = np.vstack([Bs, projw])
+        temp = McKennaConvex(k)
+        temp.optimize(workprime)
+        Si = temp.strategy()
 
-    temp = McKennaConvex(k)
-    temp.optimize(work)
-    strategy = temp.strategy()
+    # Step 2a: P1 = C^{-1/2} (S - S 1 1^T / n), with C = I
+    P1 = Si - Si @ Bs.T @ Bs / k
 
-    #pmat_CA = strategy.T @ strategy
+    # Step 2b: Cholesky of P1^T P1
+    gram = P1.T @ P1
+    gram += np.eye(k) * 1e-10  # regularize
+    L = np.linalg.cholesky(gram)
 
-    #A is the strategy matrix Si
-    A = strategy
-    Si=A
-    #Ua is 1nT @ pinv(Si )
-    Ua = Bs @ np.linalg.pinv(A)
-
-    #L = work @ np.linalg.pinv(A)
-    # print("var:\n", np.trace(L @ L.T))
-
-    # var_sum_query is Te from old algo 
-    #var_sum_query = Ua @ Ua.T
-
-    old_P=np.linalg.inv(A)-Bs.T @ Ua / k
-    P1=Si-Si @ Bs.T @ Bs / k
-    Cov=P1.T @ P1
-    regularization=1e-10
-    Cov+= np.eye(Cov.shape[0]) * regularization
-    L = np.linalg.cholesky(Cov)
-    # Calculate L2 norms of each column
+    # Step 2c: linearly independent columns of L
     col_norms = np.linalg.norm(L, axis=0)
-    # Number of columns to keep = k - (1+k-k) = k-1
-    num_cols_to_keep = k-1
-    # Get indices of columns with largest norms
-    keep_indices = np.argsort(col_norms)[-num_cols_to_keep:]
-    # Keep only columns with largest norms
-    keep_indices = np.sort(keep_indices)  # Sort indices in ascending order
+    keep_indices = np.argsort(col_norms)[-(k - 1):]
+    keep_indices = np.sort(keep_indices)
     P2 = L[:, keep_indices]
-    subi2=P2.T
 
-    sub_old=np.linalg.pinv(old_P)
+    # Step 2d: Sub_i = P2^T
+    res_mat = P2.T
 
-    def check_orthogonality(Bs, sub_matrix, tol=1e-5):
-        """
-        Check if Bs @ pinv(sub_matrix) is close to zero matrix within tolerance.
-        
-        Args:
-            Bs: The sum query matrix
-            sub_matrix: Matrix to check orthogonality with
-            tol: Tolerance for numerical precision, defaults to 1e-10
-            
-        Raises:
-            ValueError if orthogonality check fails
-        """
-        pinv_sub = np.linalg.pinv(sub_matrix)
-        check = Bs @ pinv_sub
-        
-        if not np.allclose(check, np.zeros_like(check), atol=tol):
-            max_diff = np.max(np.abs(check))
-            raise ValueError(
-                f"Orthogonality check failed: Bs @ pinv(sub) should be close to zero matrix. "
-                f"Max absolute value: {max_diff}"
-            )
-            
-    check_orthogonality(Bs, subi2)
+    # Centered workload produces naturally balanced Sub; no reweighting needed.
+    # Optional: res_mat = _equalize_sub(res_mat) for additional equalization.
 
-    #pmat_res = pmat_CA - 1.0 / var_sum_query
-    #res_mat = sqrt_mat(pmat_res)
-    res_mat=subi2
+    # Decompose workload into sum + residual components
     l_mat = np.concatenate([Bs, res_mat]).T
     r_mat = work.T
     X = np.linalg.solve(l_mat, r_mat).T
     Us = X[:, 0].reshape(-1, 1)
     Ur = X[:, 1:]
 
-    return Bs, res_mat, Us, Ur
+    gamma = np.eye(k - 1)  # Gamma = I since reweighting is absorbed into Sub
 
-#TODO: need to modify that 
-def find_residual_basis_max(k, base):
+    return Bs, res_mat, Us, Ur, gamma
+
+def find_residual_basis_max(k, base, method='cholesky'):
+    """Build residual basis for MaxVar using matrix_query optimizer.
+
+    method='cholesky': centered matrix_query + Algorithm 4 Cholesky (default)
+    method='schur':    centered matrix_query + Schur complement
+    method='old':      original uncentered matrix_query + Schur complement
+    """
     if base == 'P':
         work = prefix_workload(k)
     elif base == 'I':
@@ -285,19 +321,26 @@ def find_residual_basis_max(k, base):
         work = None
     Bs = np.ones([1, k])
 
-    param_m, param_n = work.shape
+    # Center workload for cholesky/schur methods (not for identity base)
+    if method in ('cholesky', 'schur') and base != 'I':
+        proj = np.eye(k) - np.ones((k, 1)) @ np.ones((1, k)) / k
+        projw = work @ proj
+        opt_work = np.vstack([Bs, projw])
+    else:
+        opt_work = work
+
+    param_m, param_n = opt_work.shape
     bound = np.ones(param_m)*1
 
     args = configuration()
     args.init_mat = 'id_index'
-
     args.maxitercg = 5
     args.theta = 1e-8
     args.sigma = 1e-8
     args.NNTOL = 1e-5
     args.TOL = 1e-5
 
-    index = work
+    index = opt_work
     basis = np.eye(param_n)
 
     mat_opt = matrix_query(args, basis, index, bound)
@@ -305,16 +348,28 @@ def find_residual_basis_max(k, base):
     mat_cov = mat_opt.cov/np.max(mat_opt.f_var)
 
     pmat_CA = np.linalg.inv(mat_cov)
-    A = np.linalg.cholesky(pmat_CA).T
 
-    # print("pcost:\n", np.max(pmat_CA))
+    if method == 'cholesky' and base != 'I':
+        # Algorithm 4 Cholesky: use chol(precision) as strategy Si
+        Si = np.linalg.cholesky(pmat_CA).T
+        P1 = Si - Si @ Bs.T @ Bs / k
+        gram = P1.T @ P1
+        gram += np.eye(k) * 1e-10
+        L = np.linalg.cholesky(gram)
+        col_norms = np.linalg.norm(L, axis=0)
+        keep_indices = np.argsort(col_norms)[-(k - 1):]
+        keep_indices = np.sort(keep_indices)
+        P2 = L[:, keep_indices]
+        res_mat = P2.T
+    else:
+        # Schur complement (for identity base, or schur/old methods)
+        A = np.linalg.cholesky(pmat_CA).T
+        Ua = Bs @ np.linalg.pinv(A)
+        var_sum_query = Ua @ Ua.T
+        pmat_res = pmat_CA - 1.0 / var_sum_query
+        res_mat = sqrt_mat(pmat_res)
 
-    Ua = Bs @ np.linalg.pinv(A)
-    var_sum_query = Ua @ Ua.T
-
-    pmat_res = pmat_CA - 1.0 / var_sum_query
-    res_mat = sqrt_mat(pmat_res)
-
+    # Decompose original workload (not centered) into sum + residual
     l_mat = np.concatenate([Bs, res_mat]).T
     r_mat = work.T
     X = np.linalg.solve(l_mat, r_mat).T
